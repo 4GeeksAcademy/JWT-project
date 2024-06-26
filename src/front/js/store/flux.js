@@ -24,9 +24,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 			checkUserLogin: async(login)=>{
 				try{
+					const token = localStorage.getItem('jwt-token')
 					const response = await fetch(`${process.env.BACKEND_URL}/api/user/login`,{
 						method: 'POST',
-						header: {'Content-Type': 'application/json'},
+						headers: {'Content-Type': 'application/json'},
 						body: JSON.stringify(login)
 					});
 					const data = await response.json()
@@ -35,7 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return {success: true}
 					}else{
 						console.log('Error loging')
-						return {success: false, error: data.error}
+						return {success: false, error: data.msg}
 					}
 				}
 				catch(e){
@@ -46,10 +47,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// const store = setStore()
 				console.log("funciona", signup)
 				try {
-					// error en el fetch
+					const token = localStorage.getItem('jwt-token')
+
 					const response = await fetch(`${process.env.BACKEND_URL}/api/user/signup`, {
 						method: 'POST',
-						header: { 'Content-Type': 'application/json' },
+						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(signup)
 					});
 					const data = await response.json()

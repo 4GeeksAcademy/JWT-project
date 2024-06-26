@@ -14,10 +14,10 @@ export const Login = () => {
         setLogin({...login, [e.target.name]: e.target.value});
     };
 
-    const handleLogin = async()=>{
+    const handleLogin = async(e)=>{
         e.preventDefault();
         if(login.email && login.password){
-            const resp = await actions.checkUserSesion(login);
+            const resp = await actions.checkUserLogin(login);
             if(resp.success){
                 navigate('/UserProfile')
             }else{
@@ -33,11 +33,11 @@ export const Login = () => {
     return (
         <div>
             <form className="d-flex" onSubmit={handleLogin}>
-                <label htmlfor='username' className='form-label'>Email</label>
+                <label htmlFor='username' className='form-label'>Email</label>
                 <input name='email' id='username' className="form-control me-2" type="email" placeholder="example@email.com" vale='email' onChange={handleChange}/>
 
-                <label htmlfor="password" className="form-label">Password</label>
-                <input name='password' id="password" type="password" value='login.password'onChange={handleChange}></input>
+                <label htmlFor="password" className="form-label">Password</label>
+                <input name='password' id="password" type="password" value={login.password} onChange={handleChange}></input>
                 
                 <button className="btn btn-outline-success" type="submit">Submit</button>
             </form>

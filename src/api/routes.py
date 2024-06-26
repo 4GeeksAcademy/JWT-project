@@ -54,7 +54,7 @@ def user_login():
         password = request.json.get('password')
 
         if not email or not password:
-            return jsonify({"msg": "email and password are requiered"})
+            return jsonify({"msg": "email and password are requiered"}), 400
 
         user_login = User.query.filter_by(email=email).first()
         if not user_login:
@@ -73,7 +73,7 @@ def user_login():
             return jsonify({"Error": "Invalid password"}), 400
 
     except sqlalchemy.exc.SQLAlchemyError as e:
-        # Manejar errores de la base de datos de manera específica
+        # Se manejan errores de la base de datos de manera específica
         return jsonify({"Error": "Database error", "message": str(e)}), 500 
     except Exception as e:
         return jsonify({"Error", str(e)})
